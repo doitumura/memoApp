@@ -32,6 +32,39 @@ end
 
 get '/memos/:id' do
   memo_json = JSON.parse(File.open('memos.json', 'r').read)
-  @memo = memo_json[0][params[:id].to_s]
+  @id = params[:id].to_s
+  @memo = memo_json[0][@id]
+
   erb :show
+end
+
+get '/memos/edit/:id' do
+  memo_json = JSON.parse(File.open('memos.json', 'r').read)
+  @id = params[:id].to_s
+  @memo = memo_json[0][@id]
+
+  erb :edit
+end
+
+put '/memos/:id' do
+  memo_json = JSON.parse(File.open('memos.json', 'r').read)
+  edit_memo = {"title"=>params[:title], "contents"=>params[:contents]}
+  memo_json[0][params[:id].to_s] = edit_memo
+  memo_json = JSON.generate(memo_json)
+  File.open('memos.json', 'w+') do |file|
+    file.write(memo_json)
+  end
+
+  redirect '/'
+end
+
+delete '/memos/:id' do
+  memo_json = JSON.parse(File.open('memos.json', 'r').read)
+  memo_json[0].delete(params[:id].to_s)
+  memo_json = JSON.generate(memo_json)
+  File.open('memos.json', 'w+') do |file|
+    file.write(memo_json)
+  end
+
+  redirect '/'
 end

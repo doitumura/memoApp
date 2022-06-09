@@ -4,15 +4,17 @@
 <meta charset="utf-8">
 <title>メモアプリ</title>
 </head>
- 
+
 <body>
   <h1>メモアプリ</h1>
   <ul>
     <% @memos[0].each do |id, value| %>
-        <a href="/memos/<%="#{id}"%>"<li><%= value["title"] %></li></a>
+        <a href="/memos/<%="#{id}"%>"><li><%= value["title"] %></li></a>
     <% end %>
   </ul>
 
-  <a href="memos/create">追加</a>
+  <form action=<%="/memos/create"%> method="GET">
+    <input type="submit" value="追加">
+  </form>
 </body>
 </html>
