@@ -29,3 +29,9 @@ post '/memos' do
 
   redirect '/'
 end
+
+get '/memos/:id' do
+  memo_json = JSON.parse(File.open('memos.json', 'r').read)
+  @memo = memo_json[0][params[:id].to_s]
+  erb :show
+end
