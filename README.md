@@ -5,11 +5,16 @@
 
     ```git clone https://github.com/doitumura/memoApp.git (http)```
 
-2. cloneしたリポジトリに移動
+1. cloneしたリポジトリに移動
 
     ```cd memoApp```
+    
+1. gemをインストール
 
-3. アプリを起動
+    ```bundle install```
+
+1. アプリを起動
+
     ```ruby app.rb```
     
-4. ブラウザのアドレスバーからlocalhost:4567にアクセス
+1. ブラウザのアドレスバーからlocalhost:4567にアクセス
