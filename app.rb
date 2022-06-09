@@ -2,12 +2,11 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'json'
 
-get '/' do
-  erb :index
-end
-
-get '/memos' do
-  erb :index
+['/', '/memos'].each do |path|
+  get path do
+    @memos = JSON.parse(File.open('memos.json', 'r').read)
+    erb :index
+  end
 end
 
 get '/memos/create' do

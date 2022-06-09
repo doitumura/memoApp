@@ -7,8 +7,10 @@
  
 <body>
   <h1>メモアプリ</h1>
-
   <ul>
+    <% @memos[0].each do |id, value| %>
+        <li><%= value["title"] %></li>
+    <% end %>
   </ul>
 
   <a href="memos/create">追加</a>
