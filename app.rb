@@ -46,7 +46,7 @@ get '/memos/edit/:id' do
   erb :edit
 end
 
-put '/memos/:id' do
+patch '/memos/:id' do
   memo_json = JSON.parse(File.open('memos.json', 'r').read)
   edit_memo = {"title"=>params[:title], "contents"=>params[:contents]}
   memo_json[0][params[:id].to_s] = edit_memo
