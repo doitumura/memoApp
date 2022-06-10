@@ -1,6 +1,8 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require 'json'
+require 'erb'
+include ERB::Util
 require_relative 'common.rb'
 
 MEMOS_JSON_FILE_PATH = 'data/memos.json'
@@ -19,7 +21,7 @@ end
 
 post '/memos' do
   memo_id = read_and_increase_memo_id(MEMO_ID_FILE_PATH)
-  new_memo = {"title"=>params[:title], "contents"=>params[:contents]}
+  new_memo = {"title"=>escape_html(params[:title]), "contents"=>escape_html(params[:contents])}
   write_or_delete_memo(MEMOS_JSON_FILE_PATH, memo_id, new_memo)
 
   redirect '/'
@@ -38,7 +40,7 @@ get '/memos/edit/:id' do
 end
 
 patch '/memos/:id' do
-  edit_memo = {"title"=>params[:title], "contents"=>params[:contents]}
+  edit_memo = {"title"=>escape_html(params[:title]), "contents"=>escape_html(params[:contents])}
   write_or_delete_memo(MEMOS_JSON_FILE_PATH, params[:id], edit_memo)
 
   redirect '/'
