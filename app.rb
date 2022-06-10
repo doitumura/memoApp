@@ -2,9 +2,12 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'json'
 
+MEMOS_JSON_FILE_PATH = 'data/memos.json'
+MEMO_ID_FILE_PATH = 'data/memo_id.txt'
+
 ['/', '/memos'].each do |path|
   get path do
-    @memos = JSON.parse(File.open('memos.json', 'r').read)
+    @memos = JSON.parse(File.open(MEMOS_JSON_FILE_PATH, 'r').read)
     erb :index
   end
 end
@@ -14,16 +17,16 @@ get '/memos/create' do
 end
 
 post '/memos' do
-  memo_id = (File.open('memoID.txt', 'r').read.to_i + 1).to_s
-  File.open('memoID.txt', 'w') do |file|
+  memo_id = (File.open(MEMO_ID_FILE_PATH, 'r').read.to_i + 1).to_s
+  File.open(MEMO_ID_FILE_PATH, 'w') do |file|
     file.write(memo_id)
   end
 
-  memo_json = JSON.parse(File.open('memos.json', 'r').read)
+  memo_json = JSON.parse(File.open(MEMOS_JSON_FILE_PATH, 'r').read)
   new_memo = {"title"=>params[:title], "contents"=>params[:contents]}
   memo_json[0][memo_id] = new_memo
   memo_json = JSON.generate(memo_json)
-  File.open('memos.json', 'w+') do |file|
+  File.open(MEMOS_JSON_FILE_PATH, 'w+') do |file|
     file.write(memo_json)
   end
 
@@ -31,7 +34,7 @@ post '/memos' do
 end
 
 get '/memos/:id' do
-  memo_json = JSON.parse(File.open('memos.json', 'r').read)
+  memo_json = JSON.parse(File.open(MEMOS_JSON_FILE_PATH, 'r').read)
   @id = params[:id].to_s
   @memo = memo_json[0][@id]
 
@@ -39,7 +42,7 @@ get '/memos/:id' do
 end
 
 get '/memos/edit/:id' do
-  memo_json = JSON.parse(File.open('memos.json', 'r').read)
+  memo_json = JSON.parse(File.open(MEMOS_JSON_FILE_PATH, 'r').read)
   @id = params[:id].to_s
   @memo = memo_json[0][@id]
 
@@ -47,11 +50,11 @@ get '/memos/edit/:id' do
 end
 
 patch '/memos/:id' do
-  memo_json = JSON.parse(File.open('memos.json', 'r').read)
+  memo_json = JSON.parse(File.open(MEMOS_JSON_FILE_PATH, 'r').read)
   edit_memo = {"title"=>params[:title], "contents"=>params[:contents]}
   memo_json[0][params[:id].to_s] = edit_memo
   memo_json = JSON.generate(memo_json)
-  File.open('memos.json', 'w+') do |file|
+  File.open(MEMOS_JSON_FILE_PATH, 'w+') do |file|
     file.write(memo_json)
   end
 
@@ -59,10 +62,10 @@ patch '/memos/:id' do
 end
 
 delete '/memos/:id' do
-  memo_json = JSON.parse(File.open('memos.json', 'r').read)
+  memo_json = JSON.parse(File.open(MEMOS_JSON_FILE_PATH, 'r').read)
   memo_json[0].delete(params[:id].to_s)
   memo_json = JSON.generate(memo_json)
-  File.open('memos.json', 'w+') do |file|
+  File.open(MEMOS_JSON_FILE_PATH, 'w+') do |file|
     file.write(memo_json)
   end
 
