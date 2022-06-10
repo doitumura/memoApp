@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 def read_and_increase_memo_id(file_path)
   memo_id = (File.open(file_path, 'r').read.to_i + 1).to_s
   File.open(file_path, 'w') do |file|
@@ -7,7 +9,7 @@ def read_and_increase_memo_id(file_path)
   memo_id
 end
 
-def write_or_delete_memo(file_path, memo_id, memo=nil)
+def write_or_delete_memo(file_path, memo_id, memo = nil)
   memos = JSON.parse(File.open(file_path, 'r').read)
   if memo
     memos[0][memo_id] = memo
@@ -21,13 +23,12 @@ def write_or_delete_memo(file_path, memo_id, memo=nil)
   end
 end
 
-
-def read_memo_or_memos(file_path, memo_id=nil)
+def read_memo_or_memos(file_path, memo_id = nil)
   if memo_id
-    memos = JSON.parse(File.open(MEMOS_JSON_FILE_PATH, 'r').read)
+    memos = JSON.parse(File.open(file_path, 'r').read)
     @id = memo_id
     @memo = memos[0][@id]
   else
-    @memos = JSON.parse(File.open(MEMOS_JSON_FILE_PATH, 'r').read)
+    @memos = JSON.parse(File.open(file_path, 'r').read)
   end
 end
