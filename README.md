@@ -3,7 +3,7 @@
 ### 使用手順
 1. リポジトリをclone
 
-    ```git clone https://github.com/doitumura/memoApp.git (http)```
+    ```git clone https://github.com/doitumura/memoApp.git```
 
 1. cloneしたリポジトリに移動
 
