@@ -9,7 +9,7 @@
   <h1>メモアプリ</h1>
   <ul>
     <% @memos[0].each do |id, value| %>
-        <a href="/memos/<%="#{id}"%>"><li><%= value["title"] %></li></a>
+        <a href="/memos/<%="#{id}"%>"><li><%= html_escape(value["title"]) %></li></a>
     <% end %>
   </ul>
 

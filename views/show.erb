@@ -9,11 +9,11 @@
   <h1>メモアプリ</h1>
   <div>
   <h2>タイトル</h2>
-  <p><%= @memo['title'] %></p>
+  <p><%= html_escape(@memo['title']) %></p>
   </div>
   <div>
   <h2>内容</h2>
-  <p><%= @memo['contents'] %></p>
+  <p><%= html_escape(@memo['contents']) %></p>
   </div>
 
   <div style="display:flex; width:100px; justify-content:space-between;">
