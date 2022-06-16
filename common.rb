@@ -30,7 +30,7 @@ def delete_memo(file_path, memo_id)
 end
 
 def read_memos(file_path)
-    @memos = JSON.parse(File.open(file_path, 'r').read)
+  @memos = JSON.parse(File.open(file_path, 'r').read)
 end
 
 def read_memo(file_path, memo_id)
