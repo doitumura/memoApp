@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-def read_and_increase_memo_id(file_path)
+def generate_new_id(file_path)
   memo_id = (File.open(file_path, 'r').read.to_i + 1).to_s
   File.open(file_path, 'w') do |file|
     file.write(memo_id)

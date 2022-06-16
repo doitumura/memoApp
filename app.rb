@@ -27,7 +27,7 @@ get '/memos/create' do
 end
 
 post '/memos' do
-  memo_id = read_and_increase_memo_id(MEMO_ID_FILE_PATH)
+  memo_id = generate_new_id(MEMO_ID_FILE_PATH)
   new_memo = {
     'title' => params[:title],
     'contents' => params[:contents]
