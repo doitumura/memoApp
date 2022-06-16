@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>メモアプリ</title>
+</head>
+
+<body>
+  <h1>メモアプリ</h1>
+  <form method="POST" action=<%="/memos/#{@id}"%>>
+    <input type="hidden" name="_method" value="PATCH">
+    <div>
+      <p>タイトル</p>
+      <input type="text" name="title" value="<%=@memo["title"]%>">
+    </div>
+    <div>
+      <p>内容</p>
+      <textarea name="contents"><%=@memo["contents"]%></textarea>
+    </div>
+    <input type="submit" value="変更">
+  </form>
+</body>
+</html>

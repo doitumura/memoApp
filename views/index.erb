@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>メモアプリ</title>
+</head>
+
+<body>
+  <h1>メモアプリ</h1>
+  <ul>
+    <% @memos[0].each do |id, value| %>
+        <a href="/memos/<%="#{id}"%>"><li><%= html_escape(value["title"]) %></li></a>
+    <% end %>
+  </ul>
+
+  <form action=<%="/memos/create"%> method="GET">
+    <input type="submit" value="追加">
+  </form>
+</body>
+</html>
