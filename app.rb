@@ -17,7 +17,7 @@ end
 
 ['/', '/memos'].each do |path|
   get path do
-    read_memo_or_memos(MEMOS_JSON_FILE_PATH)
+    read_memos(MEMOS_JSON_FILE_PATH)
     erb :index
   end
 end
@@ -38,13 +38,13 @@ post '/memos' do
 end
 
 get '/memos/:id' do
-  read_memo_or_memos(MEMOS_JSON_FILE_PATH, params[:id])
+  read_memo(MEMOS_JSON_FILE_PATH, params[:id])
 
   erb :show
 end
 
 get '/memos/edit/:id' do
-  read_memo_or_memos(MEMOS_JSON_FILE_PATH, params[:id])
+  read_memo(MEMOS_JSON_FILE_PATH, params[:id])
 
   erb :edit
 end

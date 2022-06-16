@@ -29,12 +29,12 @@ def delete_memo(file_path, memo_id)
   end
 end
 
-def read_memo_or_memos(file_path, memo_id = nil)
-  if memo_id
-    memos = JSON.parse(File.open(file_path, 'r').read)
-    @id = memo_id
-    @memo = memos[0][@id]
-  else
+def read_memos(file_path)
     @memos = JSON.parse(File.open(file_path, 'r').read)
-  end
+end
+
+def read_memo(file_path, memo_id)
+  memos = JSON.parse(File.open(file_path, 'r').read)
+  @id = memo_id
+  @memo = memos[0][@id]
 end
