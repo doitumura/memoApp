@@ -32,7 +32,7 @@ post '/memos' do
     'title' => params[:title],
     'contents' => params[:contents]
   }
-  write_or_delete_memo(MEMOS_JSON_FILE_PATH, memo_id, new_memo)
+  write_memo(MEMOS_JSON_FILE_PATH, memo_id, new_memo)
 
   redirect '/'
 end
@@ -54,13 +54,13 @@ patch '/memos/:id' do
     'title' => params[:title],
     'contents' => params[:contents]
   }
-  write_or_delete_memo(MEMOS_JSON_FILE_PATH, params[:id], edit_memo)
+  write_memo(MEMOS_JSON_FILE_PATH, params[:id], edit_memo)
 
   redirect '/'
 end
 
 delete '/memos/:id' do
-  write_or_delete_memo(MEMOS_JSON_FILE_PATH, params[:id])
+  delete_memo(MEMOS_JSON_FILE_PATH, params[:id])
 
   redirect '/'
 end

@@ -9,13 +9,19 @@ def read_and_increase_memo_id(file_path)
   memo_id
 end
 
-def write_or_delete_memo(file_path, memo_id, memo = nil)
+def write_memo(file_path, memo_id, memo)
   memos = JSON.parse(File.open(file_path, 'r').read)
-  if memo
-    memos[0][memo_id] = memo
-  else
-    memos[0].delete(memo_id)
+  memos[0][memo_id] = memo
+  memos_json = JSON.generate(memos)
+
+  File.open(file_path, 'w+') do |file|
+    file.write(memos_json)
   end
+end
+
+def delete_memo(file_path, memo_id)
+  memos = JSON.parse(File.open(file_path, 'r').read)
+  memos[0].delete(memo_id)
   memos_json = JSON.generate(memos)
 
   File.open(file_path, 'w+') do |file|
