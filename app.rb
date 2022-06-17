@@ -2,16 +2,70 @@
 
 require 'sinatra'
 require 'sinatra/reloader'
-require 'json'
 require 'erb'
-require_relative 'common'
+require 'pg'
 
-MEMOS_JSON_FILE_PATH = 'data/memos.json'
-MEMO_ID_FILE_PATH = 'data/memo_id.txt'
+helpers do
+  def html_escape(text)
+    ERB::Util.html_escape(text)
+  end
+end
+
+def read_memos(connection)
+  @memos = []
+  connection.exec('select * from memos') do |result|
+    result.each do |row|
+      memo = {id: row["id"], title: row["title"], content: row["content"]}
+      @memos.push memo
+    end
+  end
+end
+
+def read_memo(memo_id, connection)
+  memo = {}
+  connection.prepare('read_memo', 'select * from memos where id = $1')
+  connection.exec_prepared('read_memo', [memo_id]) do |result|
+    result.each do |row|
+      memo = {id: row["id"], title: row["title"], content: row["content"]}
+    end
+  end
+  connection.exec("DEALLOCATE read_memo")
+  memo
+end
+
+def write_memo(title, content, connection)
+  connection.prepare('write_memo', "insert into memos(id, title, content) values(nextval('memos_sequence'), $1, $2);")
+  connection.exec_prepared('write_memo', [title, content])
+  connection.exec("DEALLOCATE write_memo")
+end
+
+def edit_memo(memo_id, title, content, connection)
+  connection.prepare('edit_memo', "update memos set(title, content) = ($1, $2) where id = $3;")
+  connection.exec_prepared('edit_memo', [title, content, memo_id])
+  connection.exec("DEALLOCATE edit_memo")
+end
+
+def delete_memo(memo_id, connection)
+  connection.prepare('delete_memo', "delete from memos where id = $1;")
+  connection.exec_prepared('delete_memo', [memo_id])
+  connection.exec("DEALLOCATE delete_memo")
+end
+
+if !defined?(connection)
+  connection = PG.connect(dbname:'memo_db')
+
+  connection.exec("select tablename from pg_tables where tablename='memos';") do |result|
+    if result.ntuples == 0
+      connection.exec("create table memos(id serial primary key, title varchar, content varchar);")
+      connection.exec("create sequence memos_sequence start 1 increment 1;")
+    end
+  end
+end
 
 ['/', '/memos'].each do |path|
   get path do
-    read_memo_or_memos(MEMOS_JSON_FILE_PATH)
+    read_memos(connection)
+
     erb :index
   end
 end
@@ -21,40 +75,31 @@ get '/memos/create' do
 end
 
 post '/memos' do
-  memo_id = read_and_increase_memo_id(MEMO_ID_FILE_PATH)
-  new_memo = {
-    'title' => ERB::Util.html_escape(params[:title]),
-    'contents' => ERB::Util.html_escape(params[:contents])
-  }
-  write_or_delete_memo(MEMOS_JSON_FILE_PATH, memo_id, new_memo)
+  write_memo(params[:title], params[:content], connection)
 
   redirect '/'
 end
 
 get '/memos/:id' do
-  read_memo_or_memos(MEMOS_JSON_FILE_PATH, params[:id])
+  @memo = read_memo(params[:id], connection)
 
   erb :show
 end
 
 get '/memos/edit/:id' do
-  read_memo_or_memos(MEMOS_JSON_FILE_PATH, params[:id])
+  @memo = read_memo(params[:id], connection)
 
   erb :edit
 end
 
 patch '/memos/:id' do
-  edit_memo = {
-    'title' => ERB::Util.html_escape(params[:title]),
-    'contents' => ERB::Util.html_escape(params[:contents])
-  }
-  write_or_delete_memo(MEMOS_JSON_FILE_PATH, params[:id], edit_memo)
+  edit_memo(params[:id], params[:title], params[:content], connection)
 
   redirect '/'
 end
 
 delete '/memos/:id' do
-  write_or_delete_memo(MEMOS_JSON_FILE_PATH, params[:id])
+  delete_memo(params[:id], connection)
 
   redirect '/'
 end

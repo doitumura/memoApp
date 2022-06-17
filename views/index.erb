@@ -8,11 +8,10 @@
 <body>
   <h1>メモアプリ</h1>
   <ul>
-    <% @memos[0].each do |id, value| %>
-        <a href="/memos/<%="#{id}"%>"><li><%= value["title"] %></li></a>
+    <% @memos.each do |memo| %>
+      <a href=<%= "/memos/#{memo[:id]}"%>><%= html_escape(memo[:title]) %></a><br />
     <% end %>
   </ul>
-
   <form action=<%="/memos/create"%> method="GET">
     <input type="submit" value="追加">
   </form>

@@ -9,18 +9,18 @@
   <h1>メモアプリ</h1>
   <div>
   <h2>タイトル</h2>
-  <p><%= @memo['title'] %></p>
+  <p><%= html_escape(@memo[:title]) %></p>
   </div>
   <div>
   <h2>内容</h2>
-  <p><%= @memo['contents'] %></p>
+  <p><%= html_escape(@memo[:content]) %></p>
   </div>
 
   <div style="display:flex; width:100px; justify-content:space-between;">
-    <form action=<%="/memos/edit/#{@id}"%> method="GET">
+    <form action=<%="/memos/edit/#{@memo[:id]}"%> method="GET">
       <input type="submit" value="変更">
     </form>
-    <form action=<%="/memos/#{@id}"%> method="POST">
+    <form action=<%="/memos/#{@memo[:id]}"%> method="POST">
       <input name="_method" type="hidden" value="delete">
       <input type="submit" value="削除">
     </form>
