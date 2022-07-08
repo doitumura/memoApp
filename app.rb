@@ -86,7 +86,7 @@ get '/memos/:id' do
   erb :show
 end
 
-get '/memos/edit/:id' do
+get '/memos/:id/edit' do
   @memo = read_memo(params[:id], connection)
 
   erb :edit
