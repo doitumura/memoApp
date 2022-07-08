@@ -13,7 +13,7 @@ end
 
 def read_memos(connection)
   @memos = []
-  connection.exec('select * from memos') do |result|
+  connection.exec('select * from memos order by id') do |result|
     result.each do |row|
       memo = { id: row['id'], title: row['title'], content: row['content'] }
       @memos.push memo
