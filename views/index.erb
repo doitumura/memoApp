@@ -12,7 +12,7 @@
       <a href=<%= "/memos/#{memo[:id]}"%>><%= html_escape(memo[:title]) %></a><br />
     <% end %>
   </ul>
-  <form action=<%="/memos/create"%> method="GET">
+  <form action="<%="/memos/create"%>" method="GET">
     <input type="submit" value="追加">
   </form>
 </body>

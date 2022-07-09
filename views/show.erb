@@ -17,10 +17,10 @@
   </div>
 
   <div style="display:flex; width:100px; justify-content:space-between;">
-    <form action=<%="/memos/#{@memo[:id]}/edit"%> method="GET">
+    <form action="<%="/memos/#{@memo[:id]}/edit"%>" method="GET">
       <input type="submit" value="変更">
     </form>
-    <form action=<%="/memos/#{@memo[:id]}"%> method="POST">
+    <form action="<%="/memos/#{@memo[:id]}"%>" method="POST">
       <input name="_method" type="hidden" value="delete">
       <input type="submit" value="削除">
     </form>
