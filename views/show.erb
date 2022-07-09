@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="utf-8">
-<title>メモアプリ</title>
+  <meta charset="utf-8">
+  <title>メモアプリ</title>
 </head>
  
 <body>
   <h1>メモアプリ</h1>
   <div>
-  <h2>タイトル</h2>
-  <p><%= html_escape(@memo[:title]) %></p>
+    <h2>タイトル</h2>
+    <p><%= html_escape(@memo[:title]) %></p>
   </div>
   <div>
-  <h2>内容</h2>
-  <p><%= html_escape(@memo[:content]) %></p>
+    <h2>内容</h2>
+    <p><%= html_escape(@memo[:content]) %></p>
   </div>
 
   <div style="display:flex; width:100px; justify-content:space-between;">
