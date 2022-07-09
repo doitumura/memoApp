@@ -19,6 +19,6 @@
 
 1. アプリを起動
 
-    ```ruby app.rb```
+    ```bundle exec ruby app.rb```
     
 1. ブラウザのアドレスバーからlocalhost:4567にアクセス
