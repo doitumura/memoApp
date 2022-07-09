@@ -9,9 +9,9 @@
 
     ```cd memoApp```
 
-1. branchをdevに変更
+1. branchをmemo_dbに変更
 
-    ```git checkout dev ```
+    ```git checkout memo_db ```
 
 1. gemをインストール
 
