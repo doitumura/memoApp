@@ -7,15 +7,15 @@
 
 <body>
   <h1>メモアプリ</h1>
-  <form method="POST" action="<%="/memos/#{@memo[:id]}"%>">
+  <form method="POST" action="<%= "/memos/#{@memo[:id]}" %>">
     <input type="hidden" name="_method" value="PATCH">
     <div>
       <p>タイトル</p>
-      <input type="text" name="title" value="<%= html_escape(@memo[:title])%>">
+      <input type="text" name="title" value="<%= html_escape(@memo[:title]) %>">
     </div>
     <div>
       <p>内容</p>
-      <textarea name="content"><%=html_escape(@memo[:content])%></textarea>
+      <textarea name="content"><%= html_escape(@memo[:content]) %></textarea>
     </div>
     <input type="submit" value="変更">
   </form>
