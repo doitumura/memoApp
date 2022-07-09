@@ -11,7 +11,7 @@
 
 1. branchをmemo_dbに変更
 
-    ```git checkout memo_db ```
+    ```git checkout memo_db```
 
 1. gemをインストール
 
