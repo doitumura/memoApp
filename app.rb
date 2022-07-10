@@ -4,7 +4,7 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'erb'
 require 'pg'
-require_relative 'memo.rb'
+require_relative 'memo'
 
 helpers do
   def html_escape(text)
@@ -12,13 +12,11 @@ helpers do
   end
 end
 
-unless defined?(memo)
-  memo = Memo.new()
-end
+memo ||= Memo.new
 
 ['/', '/memos'].each do |path|
   get path do
-    @memos = memo.read_all()
+    @memos = memo.read_all
 
     erb :index
   end
