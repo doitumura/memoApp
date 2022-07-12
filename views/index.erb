@@ -1,6 +1,6 @@
 <ul>
   <% @memos.each do |memo| %>
-    <a href=<%= "/memos/#{memo[:id]}"%>><%= html_escape(memo[:title]) %></a><br />
+    <a href="<%= "/memos/#{memo[:id]}"%>"><%= html_escape(memo[:title]) %></a><br />
   <% end %>
 </ul>
 <form action="/memos/create" method="GET">
