@@ -4,8 +4,6 @@ class Memo
   attr_accessor :connection
 
   def initialize
-    return if connection
-
     self.connection = PG.connect(dbname: 'memo_db')
 
     connection.exec("CREATE TABLE IF NOT EXISTS memos(ID SERIAL PRIMARY KEY, TITLE VARCHAR, CONTENT VARCHAR);")
