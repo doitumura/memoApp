@@ -11,7 +11,6 @@ class Memo
     connection.exec("SELECT TABLENAME FROM PG_TABLES WHERE TABLENAME='memos';") do |result|
       if result.ntuples.zero?
         connection.exec('CREATE TABLE MEMOS(ID SERIAL PRIMARY KEY, TITLE VARCHAR, CONTENT VARCHAR);')
-        connection.exec('CREATE SEQUENCE MEMOS_SEQUENCE START 1 INCREMENT 1;')
       end
     end
   end
@@ -40,7 +39,7 @@ class Memo
   end
 
   def write(title, content)
-    connection.prepare('write_memo', "INSERT INTO MEMOS(ID, TITLE, CONTENT) VALUES(NEXTVAL('MEMOS_SEQUENCE'), $1, $2);")
+    connection.prepare('write_memo', "INSERT INTO MEMOS(TITLE, CONTENT) VALUES($1, $2);")
     connection.exec_prepared('write_memo', [title, content])
     connection.exec('DEALLOCATE WRITE_MEMO')
   end
