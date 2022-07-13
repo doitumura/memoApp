@@ -8,11 +8,7 @@ class Memo
 
     self.connection = PG.connect(dbname: 'memo_db')
 
-    connection.exec("SELECT TABLENAME FROM PG_TABLES WHERE TABLENAME='memos';") do |result|
-      if result.ntuples.zero?
-        connection.exec('CREATE TABLE MEMOS(ID SERIAL PRIMARY KEY, TITLE VARCHAR, CONTENT VARCHAR);')
-      end
-    end
+    connection.exec("CREATE TABLE IF NOT EXISTS memos(ID SERIAL PRIMARY KEY, TITLE VARCHAR, CONTENT VARCHAR);")
   end
 
   def read_all
