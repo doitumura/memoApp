@@ -19,7 +19,7 @@ class Memo
   end
 
   def read(memo_id)
-    memo = {}
+    memo = nil
     @connection.prepare('read_memo', 'SELECT * FROM memos WHERE id = $1')
     @connection.exec_prepared('read_memo', [memo_id]) do |result|
       result.each do |row|
