@@ -4,7 +4,7 @@ class Memo
   def initialize
     @connection = PG.connect(dbname: 'memo_db')
 
-    @connection.exec("CREATE TABLE IF NOT EXISTS memos(id SERIAL PRIMARY KEY, title VARCHAR, content VARCHAR);")
+    @connection.exec('CREATE TABLE IF NOT EXISTS memos(id SERIAL PRIMARY KEY, title VARCHAR, content VARCHAR);')
   end
 
   def read_all
@@ -31,7 +31,7 @@ class Memo
   end
 
   def write(title, content)
-    @connection.prepare('write_memo', "INSERT INTO memos(title, content) VALUES($1, $2);")
+    @connection.prepare('write_memo', 'INSERT INTO memos(title, content) VALUES($1, $2);')
     @connection.exec_prepared('write_memo', [title, content])
     @connection.exec('DEALLOCATE write_memo')
   end
