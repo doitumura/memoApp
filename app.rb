@@ -12,7 +12,7 @@ helpers do
   end
 end
 
-memo ||= Memo.new
+memo = Memo.new
 
 ['/', '/memos'].each do |path|
   get path do
